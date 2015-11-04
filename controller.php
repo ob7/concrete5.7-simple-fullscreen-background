@@ -32,6 +32,25 @@ class Controller extends BlockController
 		$this->set('background',$background_image);
 	}
 
+	public function on_start()
+	{
+		$pkg = 'fullscreen_background';
+		$al = \Concrete\Core\Asset\AssetList::getInstance();
+		$al->register(
+			'javascript','stellar','blocks/fullscreen_background/jquery.stellar.js',
+			array('version' => '1.0.0','minify' => false, 'combine' => true),$pkg
+		);
+		$al->registerGroup('stellar',array(
+			array('javascript','jquery'),
+			array('javascript','stellar')
+		));
+	}
+
+	public function on_page_view()
+	{
+		$this->requireAsset('stellar');
+	}
+
 	public function validate($data)
 	{
 		$e = Core::make('error');
@@ -43,6 +62,7 @@ class Controller extends BlockController
 
 	public function save($data)
 	{
+		$data['parallax'] = intval($data['parallax']);
 		parent::save($data);
 	}
 }

@@ -14,5 +14,9 @@
 		</field>
 		<field name="background" type="string">
 		</field>
+		<field name="parallax" type="boolean">
+			<default value="0" />
+			<not null/>
+		</field>
 	</table>
 </schema>
